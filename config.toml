@@ -1,0 +1,63 @@
+# The URL the site will be built for
+base_url = "https://yenwel.github.io/blog"
+
+default_language = "en"
+title = "Déjà fu"
+description = "I’m teaching you things all the time. You might not be learning them, of course."
+
+generate_rss = true
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = true
+
+theme="zola.386"
+
+taxonomies = [
+  {name="categories", rss=true},
+  {name="tags", rss=true},
+]
+
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = true
+
+[extra]
+# Put all your custom variables here
+
+author = "Jan Vandepitte"
+year = "2021"
+
+keywords = "data, iot, category theory, ai, rust, art, sculpture"
+theme_color = "#000084"
+zola386_menu = [
+  {path="", name="Home"},
+  {path="categories", name="Categories"},
+  {path="tags", name="Tags"},
+  {path="about", name="About"},
+]
+
+
+### SOCIAL MEDIA
+# image = "https://raw.githubusercontent.com/lopes/zola.386/master/screenshot.png"
+twitter_user = "wel_yen"
+linkedin_user = "jan-vandepitte"
+github_user = "yenwel"
+gitlab_user = "yenwel1987"
+
+disqus= "blog-qqjqpjlybg"
+
+
+### I18N WORDS
+label_tags = "Tags"
+label_tag = "Tag"
+label_categories = "Categories"
+label_category = "Category"
+label_author = "Author"
+label_date = "Date"
+label_taxonomy = "Taxonomy"
+label_reading = "Reading time"
+label_read_more = "Read more"
