@@ -32,7 +32,7 @@ author = "Jan Vandepitte"
 year = "2021"
 
 keywords = "data, iot, category theory, ai, rust, art, sculpture"
-theme_color = "#000084"
+theme_color = "#c98c08"
 zola386_menu = [
   {path="", name="Home"},
   {path="categories", name="Categories"},
