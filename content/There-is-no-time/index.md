@@ -48,7 +48,11 @@ The essence of automation is scalability which means you try to make unit costs 
 
 ## Simple example: I need a new keyboard,
 
-Putting this all together we start with a small example how this can be applied.
+Putting this all together we start with a small example how this can be applied. Let's start with the following situation to illustrate the disparity between the scale of costs between you as developer and the tooling you work with everyday. The most fundamental thing you work as a knowledge worker is usually some kind of keyboard or input device. Imagine the situation where you are giving a faulty keyboard. Let's say the defect is that due to overusage of keys the colon en semicolon on your keyboard has become indistinguishable. This may be annoying since as a developer working typically in C-style languages your statements are usually terminated by semicolons and if you make an error while blind typing it may be more difficult to get in the flow when you try to figure out which one of the two you have to push to fix your syntax error. How do you ask your manager for a new keyboard. You could just ask but if you had those soft skills why did you become a developer in the first place. 
+
+As mentioned you can use the power of the source here. You can look up the total amount of lines terminated with semicolons in your code base. Doing some [tacobell programming](http://widgetsandshit.com/teddziuba/2010/10/taco-bell-programming.html)can help you with that task. Looking at the age of your source code repository you can estimate how much lines of code that end with semicolons are added over a timeperiod. You can look at the average typing speed of about 187 characters per minute https://wordcounter.net/blog/2016/04/29/10984_what-is-an-average-typing-speed.html compared to the total amount of characters in your code base and from that you can estimate the proportion of how much time a typical contributor is adding to the code. If you estimate that about 50% of the time your are typing a colon instead of semicolon you have a proportion of time that has a chance that you are delayed by your faulty keyboard. You can then report this to your manager and they can offset this to the cost of sourcing you a new keyboard.
+
+https://zola.discourse.group/t/use-mathematical-formula-with-zola/308
 
 ## More elaborate example: The entire floor is waiting for the error you made in the configuration.
 
