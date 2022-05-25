@@ -2,7 +2,7 @@
 title = "An analogy"
 description = "Eating fruit or eating an apple is contravariant to fruit or an apple"
 date = 2021-06-10
-draft = false
+draft = true
 slug = "eating-fruit"
 
 [taxonomies]
