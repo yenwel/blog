@@ -54,14 +54,7 @@ As mentioned you can use the power of the source here. You can look up the total
 
 [comment]: # (https://zola.discourse.group/t/use-mathematical-formula-with-zola/308)
 
-$$
-\begin{equation}
-\begin{split}   
-CostOfMistyping \, \frac{€}{workday} &=b+c\\
-      &=e+f
-\end{split}
-\end{equation}
-$$
+$$CostOfMistyping \frac{€}{workday} =b+c$$
 
 ## More elaborate example: The entire floor is waiting for the error you made in the configuration.
 
