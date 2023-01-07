@@ -17,7 +17,7 @@ comments = true
 
 Whatever role you are in as a technical person you are usually in a context where you are a cost center to an organization on a budget in the public sector or with a profit goal in the private sector. The only profit center for a company is possibly maybe even only a paying customer according to Peter Drucker. Or a satisfied taxpayer if you are in the public sector. Not everyone works at a FAANG/MAMAA company where you have the privilige to spend 20% on your time on "n'importe quoi" be it a hobby project or some necessary improvement. Sometimes from your expert point of view you can identify certain improvements that think would benefit your organization and maybe also look good on your CV. Usually you are managed at by somebody who does not talk in the same language like you about software architecture and engineering. You can however talk in a common language of fungible things like time or money. Unless you are a solo start-up founder and then the following is still relevant knowledge to have if you want to keep you business from running up high costs. When you are in a constrained environment you can use the below ascribed technique to negotiate budget or budgetted time to be spent on a necessary technical improvements. Here we try to show a way how to put a number on technical debt and what a return of investment would be when trying to decrease this technical debt. 
 
-Some managers have read the lean start-up and think technical debt does not exists. This is however in the assumption that one can cashout the start-up before that and exit the business before you have to pay back on that debt. If you are not working in a start-up with a short term exit scenario you can counter that argument by quantify this debt in the long term.
+Some managers have read the lean start-up and follow the conviction that technical debt does not exists. This is however in the assumption that one can cashout the start-up before that and exit the business before you have to pay back on that debt. If you are not working in a start-up with a short term exit scenario you can counter that argument by quantify this debt in the long term.
 
 ## Background: lean cost calculation
 
@@ -29,6 +29,8 @@ Another tool in the toolbox of lean manufacturing is the Kaizen event. The purpo
 
 Another concept that is helpfull here is looking at wastes or muda in your process that could be useful in choosing a metric for the measurement phase. For manufacturing muda are classified under the mnemonic TIMWOODS which stands for Transportation, Inventory, Motion, Waiting, Overproduction, Over processing, Defects and Skills which is pretty self-explanatory.
 
+### Back of the envelope
+
 To define your metric it is possible to do back of the envelope calculations to estimate any of these potential wastes. If you are not familiar with them there is a [good introduction](https://anchor.fm/breakingmathpodcast/episodes/P9-Give-or-Take-Back-of-the-Envelope-Estimates--Fermi-Problems-ev6tlf) for this in the breaking math podcast. This a skill that is sometimes tested by large companies in the hiring process. There is a talk by Jeff Dean that shows how they use this method to make the right choices when writing code based on latency numbers:
 
 [![google talk by Jeff Dean](https://img.youtube.com/vi/modXC5IWTJI/0.jpg)](https://www.youtube.com/watch?v=modXC5IWTJI)
@@ -38,7 +40,10 @@ This may seem crude but you may be familiar with the pareto principle which says
 [![perturbation theory Space Time](https://img.youtube.com/vi/oQ1WZ-eJW8Y/0.jpg)](https://www.youtube.com/watch?v=oQ1WZ-eJW8Y)
 
 Even more fundamentally this idea of a small proportion explaining a large part by approximation can by found in information theory with the Zipf-distribution which is covered here by Vsauce:
+
 [![vsause zipf](https://img.youtube.com/vi/fCn8zs912OE/0.jpg)](https://www.youtube.com/watch?v=fCn8zs912OE)
+
+### Measuring economies of scale of development
 
 To get more concretely on what to try to measure you may ask yourself what can I measure to put a figure on my technical debt. Here the late Peter Hintjes dropped a clue in his free ebook  [Culture and Empire](https://content.cultureandempire.com/index.html) that products of technological innovation have a deflationairy pressure on them as a generalization on Moore's law. 
 
