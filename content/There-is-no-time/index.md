@@ -17,7 +17,8 @@ comments = true
 
 Whatever role you are in as a technical person you are usually in a context where you are a cost center to an organization on a budget in the public sector or with a profit goal in the private sector. The only profit center for a company is possibly maybe even only a paying customer according to Peter Drucker. Or a satisfied taxpayer if you are in the public sector. Not everyone works at a FAANG/MAMAA company where you have the privilige to spend 20% on your time on "n'importe quoi" be it a hobby project or some necessary improvement. Sometimes from your expert point of view you can identify certain improvements that think would benefit your organization and maybe also look good on your CV. Usually you are managed at by somebody who does not talk in the same language like you about software architecture and engineering. You can however talk in a common language of fungible things like time or money. Unless you are a solo start-up founder and then the following is still relevant knowledge to have if you want to keep you business from running up high costs. When you are in a constrained environment you can use the below ascribed technique to negotiate budget or budgetted time to be spent on a necessary technical improvements. Here we try to show a way how to put a number on technical debt and what a return of investment would be when trying to decrease this technical debt. 
 
-Some managers have read the lean start-up and follow the conviction that technical debt does not exists. This is however in the assumption that one can cashout the start-up before that and exit the business before you have to pay back on that debt. If you are not working in a start-up with a short term exit scenario you can counter that argument by quantify this debt in the long term.
+Some managers have read the lean start-up and follow the conviction thatls
+ technical debt does not exists. This is however in the assumption that one can cashout the start-up before that and exit the business before you have to pay back on that debt. If you are not working in a start-up with a short term exit scenario you can counter that argument by quantify this debt in the long term.
 
 ## Background: lean cost calculation
 
@@ -62,7 +63,7 @@ As mentioned before you can use the power of the source here. You can look up th
 
 [comment]: # (https://zola.discourse.group/t/use-mathematical-formula-with-zola/308)
 
-$$CostOfMistyping \frac{€}{workday} =b+c$$
+$$CostOfMistyping \frac{€}{workday} = \frac{1}{2} * \frac{LinesOfCodeInCodeRepository}{AgeOfRepo}$$
 $$\left(\LARGE{AB}\right)$$
 
 ## More elaborate example: The entire floor is waiting for the error you made in the configuration.
