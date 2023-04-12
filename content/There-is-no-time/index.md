@@ -63,7 +63,14 @@ As mentioned before you can use the power of the source here. You can look up th
 
 [comment]: # (https://zola.discourse.group/t/use-mathematical-formula-with-zola/308)
 
-$$CostOfMistyping \frac{€}{workday} = \frac{1}{2} * \frac{LinesOfCodeInCodeRepository}{AgeOfRepo}$$
+With a simple grep on a compilable repo you can estimate how much lines end with a semicolom
+
+$$RateOfMistyping \frac{NumberOfMistakes}{Second} = \frac{1}{2} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds}$$
+
+$$DevelopmentRatio \frac{WorkinghourSeconds}{Second} =  ratioDevelopmentDuringWork \frac{1}{2} * \frac{200 working days per year}{365 days per year} * \frac{8 hour per workingday}{24 hour per day} = 0.091  \frac{Development Seconds}{Second} $$
+
+$$CostOfMistyping \frac{€}{workday} = 0.091 * RateOfMistyping * FTEdayrate  \frac{€}{workday} $$
+
 $$\left(\LARGE{AB}\right)$$
 
 ## More elaborate example: The entire floor is waiting for the error you made in the configuration.
