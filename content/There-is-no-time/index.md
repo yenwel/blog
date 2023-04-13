@@ -17,8 +17,7 @@ comments = true
 
 Whatever role you are in as a technical person you are usually in a context where you are a cost center to an organization on a budget in the public sector or with a profit goal in the private sector. The only profit center for a company is possibly maybe even only a paying customer according to Peter Drucker. Or a satisfied taxpayer if you are in the public sector. Not everyone works at a FAANG/MAMAA company where you have the privilige to spend 20% on your time on "n'importe quoi" be it a hobby project or some necessary improvement. Sometimes from your expert point of view you can identify certain improvements that think would benefit your organization and maybe also look good on your CV. Usually you are managed at by somebody who does not talk in the same language like you about software architecture and engineering. You can however talk in a common language of fungible things like time or money. Unless you are a solo start-up founder and then the following is still relevant knowledge to have if you want to keep you business from running up high costs. When you are in a constrained environment you can use the below ascribed technique to negotiate budget or budgetted time to be spent on a necessary technical improvements. Here we try to show a way how to put a number on technical debt and what a return of investment would be when trying to decrease this technical debt. 
 
-Some managers have read the lean start-up and follow the conviction thatls
- technical debt does not exists. This is however in the assumption that one can cashout the start-up before that and exit the business before you have to pay back on that debt. If you are not working in a start-up with a short term exit scenario you can counter that argument by quantify this debt in the long term.
+Some managers have read the lean start-up and follow the conviction that echnical debt does not exists. This is however in the assumption that one can cashout the start-up before that and exit the business before you have to pay back on that debt. If you are not working in a start-up with a short term exit scenario you can counter that argument by quantify this debt in the long term.
 
 ## Background: lean cost calculation
 
@@ -59,23 +58,36 @@ The essence of automation is scalability which means you try to make unit costs 
 
 Putting all this theory together we can start with a small example how this can be applied. Let's start with the following situation to illustrate the disparity between the scale of costs between you as developer and the tooling you work with everyday. The most fundamental thing you work as a knowledge worker is usually some kind of keyboard or input device. Imagine the situation where you are giving a faulty keyboard. Let's say the defect is that due to overusage of keys the colom en semicolom on your keyboard has become indistinguishable. This may be annoying since as a developer working typically in C-style languages your statements are usually terminated by semicoloms and if you make an error while blind typing it may be more difficult to get in the flow when you try to figure out which one of the two you have to push to fix your syntax error. How do you ask your manager for a new keyboard. You could just ask but if you had those soft skills why did you become a developer in the first place. 
 
-As mentioned before you can use the power of the source here. You can look up the total amount of lines terminated with semicoloms in your code base. Doing some [tacobell programming](http://widgetsandshit.com/teddziuba/2010/10/taco-bell-programming.html) can help you with that task. Looking at the age of your source code repository you can estimate how much lines of code that end with semicoloms are added over a timeperiod. You can look at the average typing speed of about [187 characters per minute](https://wordcounter.net/blog/2016/04/29/10984_what-is-an-average-typing-speed.html) compared to the total amount of characters in your code base and from that you can estimate the proportion of how much time a typical contributor is adding to the code. If you estimate that about half of the time your are typing a colom instead of semicolom you have a proportion of time that has a chance that you are delayed by your faulty keyboard. You can then report this to your manager and they can offset this to the cost of sourcing you a new keyboard. One thing important to keep in mind that you are not comparing apples with oranges. That's why it's important to write down the full formula of your equation so we'll do this with \\( \LaTeX \\) using [\\( \KaTeX \\)](https://katex.org/).
+One thing important to keep in mind that you are not comparing apples with oranges. That's why it's important to write down the full formula of your equation so we'll do this with \\( \LaTeX \\) using [\\( \KaTeX \\)](https://katex.org/).
 
-[comment]: # (https://zola.discourse.group/t/use-mathematical-formula-with-zola/308)
+As mentioned before you can use the power of the source here. You can look up the total amount of lines terminated with semicoloms in your code base. Doing some [tacobell programming](http://widgetsandshit.com/teddziuba/2010/10/taco-bell-programming.html) can help you with that task. Looking at the age of your source code repository you can estimate how much lines of code that end with semicoloms are added over a timeperiod. If you estimate that about half of the time your are typing a colom instead of semicolom you have a proportion of time that has a chance that you are delayed by your faulty keyboard.
 
-With a simple grep on a compilable repo you can estimate how much lines end with a semicolom
+$$RateOfMistyping \frac{[NumberOfMistakes]}{[Seconds]} = \frac{1}{2} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds}$$
 
-$$RateOfMistyping \frac{NumberOfMistakes}{Second} = \frac{1}{2} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds}$$
+We do not work 24/7 so we need to adjust time for that:
 
-$$DevelopmentRatio \frac{WorkinghourSeconds}{Second} =  ratioDevelopmentDuringWork \frac{1}{2} * \frac{200 working days per year}{365 days per year} * \frac{8 hour per workingday}{24 hour per day} = 0.091  \frac{Development Seconds}{Second} $$
+$$DevelopmentRatio \frac{[DevelopmentSeconds]}{[Seconds]} =  RatioDevelopmentDuringWork \frac{1}{2} * \frac{200 [WorkingDaysPerYear]}{365 [DaysPerYear]} * \frac{8[HoursPerWorkingday]}{24[HoursPerDay]} = \frac{100}{1095}  \frac{[DevelopmentSeconds]}{[Seconds]} $$
 
-$$CostOfMistyping \frac{€}{workday} = 0.091 * RateOfMistyping * FTEdayrate  \frac{€}{workday} $$
+We can transform these ratios into something more hands on for decision makers:
 
-$$\left(\LARGE{AB}\right)$$
+$$CostOfMistyping \frac{[€]}{[Workday]} = \frac{1095}{100} * RateOfMistyping * FTEdayrate  \frac{[€]}{[Workday]}  = \frac{1095}{200} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds} * FTEdayrate  \frac{[€]}{[Workday]} $$
+
+You can then report this to your manager and they can offset this to the cost of sourcing you a new keyboard. Using this simple formula he can calculate an earnback period for a simple keyboard.
 
 ## More elaborate example: The entire floor is waiting for the error you made in the configuration.
 
-A more elaborate example.
+> You NEED to get out of this meeting NOW because you checked something into the configuration and now the ENTIRE FLOOR is waiting for you to fix that error because the sit is BROKEN.
 
+Has this ever happened to you? Clumsy huh. Maybe also a pointer there is something deeply wrong in an organisation or an architecture. Sometimes you end up in a situation of a big ball of mud somewhere between tripleheaded monolith monstrocity and a distributed monolith pretending to be a microservices architecture that is difficult to disentangle. These eye-opening situations can spark some idea of what are the bottlenecks that are of great cost for the organization you are working for. Mo' services mo' problems and a solution to distributed configuration in microservices is the principle of control plane in a service mesh. More concretely we will take a stab at Consul as control plane as an alternative for checking configurations into source control and running it through a CI/CD pipeline tied to a monolith.
+
+Again we can use the power of the source. Since all configuration is checked in under one folder in the monolith we can use the power of the source to lookup how many changes were done to that folder.
+
+```
+git log -- path/to/configfolder/*
+```
+
+Surely a modern organization is using git by now ;).
 
 ## Conclusion: how many developers does it take to turn in a light bulb
+
+Using 
