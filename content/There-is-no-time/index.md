@@ -78,7 +78,7 @@ You can then report this to your manager and they can offset this to the cost of
 
 > You NEED to get out of this meeting NOW because you checked something into the configuration and now the ENTIRE FLOOR is waiting for you to fix that error because the sit is BROKEN.
 
-Has this ever happened to you? Clumsy huh. Maybe also a pointer there is something deeply wrong in an organisation or an architecture. Sometimes you end up in a situation of a big ball of mud somewhere between tripleheaded monolith monstrocity and a distributed monolith pretending to be a microservices architecture that is difficult to disentangle. These eye-opening situations can spark some idea of what are the bottlenecks that are of great cost for the organization you are working for. Mo' services mo' problems and a solution to distributed configuration in microservices is the principle of control plane in a service mesh. More concretely we will take a stab at Consul as control plane as an alternative for checking configurations into source control and running it through a CI/CD pipeline tied to a monolith.
+Has this ever happened to you? Clumsy huh. Maybe also a pointer there is something deeply wrong in an organisation or an architecture. Sometimes you end up in a situation of a big ball of mud somewhere between tripleheaded monolith monstrocity and a distributed monolith pretending to be a microservices architecture that is difficult to disentangle. These eye-opening situations can spark some idea of what are the bottlenecks that are of great cost for the organization you are working for. Since "Waiting" is one of the Lean Muda we will focus on optimizing the cost of the waiting time of your colleagues. Mo' services mo' problems and a solution to distributed configuration in microservices is the principle of control plane in a service mesh. More concretely we will take a stab at Consul as control plane as an alternative for checking configurations into source control and running it through a CI/CD pipeline tied to a monolith.
 
 Again we can use the power of the source. Since all configuration is checked in under one folder in the monolith we can use the power of the source to lookup how many changes were done to that folder.
 
@@ -86,7 +86,10 @@ Again we can use the power of the source. Since all configuration is checked in 
 git log -- path/to/configfolder/*
 ```
 
-Surely a modern organization is using git by now ;).
+Surely a modern organization is using git by now ;). Again we can also look at the first commit date and last commit date to estimate the time your colleagues have been working in this configuration folder. A simple sample estimation of build and deployment of the monolith can give us a rough estimate of one hour for each step getting a configuration change into a live environment. Since the entire floor was waiting on you during the wrong configuration change you can assume at least one developer is idling for your change to go live (Let alone a tester, business owner or god forbid an actual end user). With this knowledge we get a rough estimate of the operation expenses of using configuration tied to the monolith.
+
+$$CostOfMistyping \frac{[€]}{[Workday]} = \frac{1095}{100} * RateOfMistyping * FTEdayrate  \frac{[€]}{[Workday]}  = \frac{1095}{200} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds} * FTEdayrate  \frac{[€]}{[Workday]} $$
+
 
 ## Conclusion: how many developers does it take to turn in a light bulb
 
