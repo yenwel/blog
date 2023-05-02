@@ -88,7 +88,11 @@ git log -- path/to/configfolder/*
 
 Surely a modern organization is using git by now ;). Again we can also look at the first commit date and last commit date to estimate the time your colleagues have been working in this configuration folder. A simple sample estimation of build and deployment of the monolith can give us a rough estimate of one hour for each step getting a configuration change into a live environment. Since the entire floor was waiting on you during the wrong configuration change you can assume at least one developer is idling for your change to go live (Let alone a tester, business owner or god forbid an actual end user). With this knowledge we get a rough estimate of the operation expenses of using configuration tied to the monolith.
 
+$$NumberOfConfigChangesPerWorkDay \frac{[ConfigChange]}{[Workday]} = \frac{1095}{100} * NumberOfConfigChangesSinceStartOf * FTEdayrate  \frac{[€]}{[Workday]}  = \frac{1095}{200} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds} * FTEdayrate  \frac{[€]}{[Workday]} $$
+
 $$CostOfMistyping \frac{[€]}{[Workday]} = \frac{1095}{100} * RateOfMistyping * FTEdayrate  \frac{[€]}{[Workday]}  = \frac{1095}{200} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds} * FTEdayrate  \frac{[€]}{[Workday]} $$
+
+
 
 
 ## Conclusion: how many developers does it take to turn in a light bulb
