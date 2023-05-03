@@ -7,6 +7,16 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <link rel="stylesheet" href="{{ get_url(path="site.css", trailing_slash=false) | safe }}">
+  <style>    
+    img {
+      -webkit-filter: contrast(100%);
+          -moz-filter: contrast(100%);
+          -ms-filter: contrast(100%);
+            -o-filter: contrast(100%);
+              filter: contrast(100%);
+    }
+  </style>
+
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   
   {% if config.generate_rss %}
@@ -168,6 +178,9 @@
         {% endif %}        
         {% if config.extra.deviantart_user %}
         <a href="https://www.deviantart.com/{{ config.extra.deviantart_user }}" target="_blank">Deviant Art</a>
+        {% endif %}          
+        {% if config.extra.mastodon_user %}
+        <a href="https://{{ config.extra.mastodon_instance }}/@{{ config.extra.mastodon_user }}" target="_blank">Mastodon</a>
         {% endif %}
         |
         Built on <a href="https://getzola.org" target="_blank">Zola</a>
