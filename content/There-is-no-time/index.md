@@ -1,7 +1,7 @@
 +++
 title = "There is no time for that"
 description = "How to quantify and sell an investment on improving on technical debt to your organization"
-date = 2023-01-09
+date = 2023-01-08
 draft = false
 slug = "there-is-no-time"
 
@@ -17,7 +17,7 @@ comments = true
 
 > You NEED to get out of this meeting NOW because you checked something into the configuration and now the ENTIRE FLOOR is waiting for you to fix that error because the site is BROKEN.
 
-Has this ever happened to you? Clumsy huh. Maybe also a pointer there is something deeply wrong in an organisation or an architecture. Sometimes you end up in a situation of a big ball of mud somewhere between tripleheaded monolith monstrocity and a distributed monolith pretending to be a microservices architecture that is difficult to disentangle. These eye-opening situations can spark some idea of what are the bottlenecks that are of great cost for the organization you are working for. At the end of this text we will try to find a way to fix this specific technical debt issue in a data driven way.
+Has this ever happened to you? Clumsy huh. Maybe also a pointer there is something wrong in an organisation or an architecture. Sometimes you end up in a situation of a big ball of mud somewhere between tripleheaded monolith and a distributed monolith pretending to be a microservices architecture that is difficult to disentangle. These eye-opening situations can spark some idea of what are the bottlenecks that are of great cost for the organization you are working for. At the end of this text we will try to find a way to fix this specific technical debt issue in a data driven way.
 
 But first let's start with a low impact example.
 
@@ -25,7 +25,7 @@ But first let's start with a low impact example.
 
 There is a disparity between the scale of costs between you as developer and the tooling you work with everyday. The most fundamental thing you work as a knowledge worker is usually some kind of keyboard or input device. Imagine the situation where you are giving a faulty keyboard. Let's say the defect is that due to overusage of keys the colom en semicolom on your keyboard has become indistinguishable. This may be annoying since as a developer working typically in C-style languages your statements are usually terminated by semicoloms and if you make an error while blind typing it may be more difficult to get in the flow when you try to figure out which one of the two you have to push to fix your syntax error. How do you ask your manager for a new keyboard. You could just ask but if you had those soft skills why did you become a developer in the first place. 
 
-One thing important to keep in mind that you are not comparing apples with oranges. That's why it's important to write down the full formula of your equation so we'll do this with \\( \LaTeX \\) using [\\( \KaTeX \\)](https://katex.org/).
+One thing important to keep in mind that you are not comparing apples with oranges. That's why it's important to write down the full formula of your equation so we'll do this with \\( \LaTeX \\) using [\\( \KaTeX \\)](https://katex.org/) so you can balance the units of measure.
 
 We can use the power of the source here. You can look up the total amount of lines terminated with semicoloms in your code base. Doing some [tacobell programming](http://widgetsandshit.com/teddziuba/2010/10/taco-bell-programming.html) can help you with that task. Looking at the age of your source code repository you can estimate how much lines of code that end with semicoloms are added over a timeperiod. If you estimate that about half of the time your are typing a colom instead of semicolom you have a proportion of time that has a chance that you are delayed by your faulty keyboard.
 
@@ -33,7 +33,9 @@ $$RateOfMistyping \frac{[NumberOfMistakes]}{[Seconds]} = \frac{1}{2} * \frac{Num
 
 We do not work 24/7 so we need to adjust time for that, we also roughly assume that half of our time we are writing code:
 
-$$DevelopmentRatio \frac{[Worktime]}{[Time]} =  RatioDevelopmentDuringWork \frac{1}{2} * \frac{200 [WorkingDaysPerYear]}{365 [DaysPerYear]} * \frac{8[HoursPerWorkingday]}{24[HoursPerDay]} \newline = \frac{100}{1095}  \frac{[Worktime]}{[Time]} $$
+$$DevelopmentRatio \frac{[workseconds]}{[seconds]} =  RatioDevelopmentDuringWork \frac{1}{2} * \frac{200 \frac{[WorkDay]}{[Year]}}{365 \frac{[Day]}{[Year]}} * \frac{8\frac{[Hour]}{[Workingday]}}{24\frac{[Hour]}{[Day]}} \newline = \frac{100}{1095}  \frac{[Worktime]}{[Time]} $$
+
+Since it the ratio is a ratio of two similar things measured in seconds it is in essence dimensionless.
 
 We can transform these ratios into something more hands on for decision makers:
 
@@ -95,10 +97,35 @@ git log -- path/to/configfolder/*
 
 Surely a modern organization is using git by now ;). Again we can also look at the first commit date and last commit date to estimate the time your colleagues have been working in this configuration folder. A simple sample estimation of build and deployment of the monolith can give us a rough estimate of one hour for each step getting a configuration change into a live environment. Since the entire floor was waiting on you during the wrong configuration change you can assume at least one developer is idling for your change to go live (Let alone a tester, business owner or god forbid an actual end user). With this knowledge we get a rough estimate of the operation expenses of using configuration tied to the monolith.
 
-$$NumberOfConfigChangesPerWorkDay \frac{[ConfigChange]}{[Workday]} = \frac{1095}{200} * \frac{NumberOfConfigChangesSinceStart} * FTEdayrate  \frac{[€]}{[Workday]}  = \frac{1095}{200} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds} * FTEdayrate  \frac{[€]}{[Workday]} $$
+First we estimate the number of config changes per workday:
+$$NumberOfConfigChangesPerWorkDay \frac{[ConfigChange]}{[Workday]}  \newline = \frac{1095}{200} [Worktimeratio] * 60 \frac{[Seconds]}{[Minute]} * 60 \frac{[Minute]}{[Hour]} * 24 \frac{[Hour]}{[Day]}  \newline * \frac{NumberOfConfigChangesSinceStartRepo [ConfigChange]}{AgeOfRepo[Seconds]} $$
 
-$$CostOfMistyping \frac{[€]}{[Workday]} = \frac{1095}{100} * RateOfMistyping * FTEdayrate  \frac{[€]}{[Workday]}  = \frac{1095}{200} * \frac{NumberOfNewLinesEndingWithSemiColom}{AgeOfRepoSeconds} * FTEdayrate  \frac{[€]}{[Workday]} $$
+Then we estimate the daily cost for the configchanges via the old buildsystem:
+$$CostPerWorkDay \frac{[€]}{[Workday]} = NumberOfConfigChangesPerWorkDay \frac{[ConfigChange]}{[Workday]} \newline * 1 \frac{[Workhour]}{[ConfigChange]} * \frac{1}{8} \frac{[Workday]}{[Workhour]} * FTEdayrate  \frac{[€]}{[Workday]}$$
+
+
+$$CostPerWorkDay \frac{[€]}{[Workday]} = \frac{1095}{200} * 60 * 60 * 24 * \frac{1}{8} \newline * \frac{NumberOfConfigChangesSinceStartRepo [ConfigChange]}{AgeOfRepo[Seconds]}  *  FTEdayrate  * \frac{[€]}{[Workday]} $$
+
+For the cross cutting concern of configuration management we might consider a solution like Consul by Hashicorp. The operational expense (OPEX) of this solution is negligable compared to the legacy 1-hour buildtime. This can easily be simulated [here](https://www.serf.io/docs/internals/simulator.html) with a webtool by Hashicorp that configchanges can be distributed in subsecond timeframes. The setup of Consul is rather simple and easy to build an MVP within your organization. Let's consider that you timebox the research into setting Consul to 1 FTE for one scrumsprint of 2 weeks and consider that licensing costs for open source software is a free lunch and hardwarecost are negligable compared to the developer cost we can do a rough estimate of the initial investment or CAPEX for the replacement architecture as just the dayrate of you as an FTE.
+
+That way we can estimate an ROI calculation on this investement on improving on this technical debt versus letting the current architecture and proces running:
+
+First we can do a rough estimate of keeping the architectural debt running for one year.
+
+$$YearlyCost = CostPerWorkDay \frac{[€]}{[Workday]} * 200 \frac{[Workday]}{[Year]} $$
+
+When we do an investement analysis we want to compare the investment versus the costcutting. So the Return On Investment in a one year technical investement decision is:
+
+$$ ROI =  \frac{YearlyCost}{InitialInvestment} = \frac{YearlyCost}{FTEdayrate * 10 ScrumSprintWorkingDays} $$
+
+If we would write in full the YearlyCost we may realize that the FTEdayrate is both in the numerator and denominator of the ROI estimation. This is an important point that the investment can be analyzed on a purely time based accounting method to estimate a ROI. FTE dayrates may be a sensitive topic in any organization so it may make some conversations easier. But you may give the yearly cost formula to a decisionmaker to drive home the argument that the technical debt is actually costing to the organization and let them fill in the blanks. Or come back with a more refined counter argument to why the cost may not be of that order of magnitude. But that is at least better than pretending that technical debt does not exist.
 
 ## Conclusion: how many developers does it take to turn in a light bulb
 
-Using 
+To conclude this article we learned the following things. 
+* *Technical debt exists and can be roughly estimated in some instances. 
+* *Order of magnitudes and back of the enveloppe estimation may be used to do more data driven decision making.
+* *Learning to balancing equations using units of measures is important to not compare apples to oranges.
+* *In software we can reduce a lot of reasoning about thinking about costs to the cost of ourselves as employee as toolbuilders as our tools come with enormous economies of scale.
+* *Use the source and the worklog like system to get a rought estimate of different ways technical debt our impacting the bottomline of your organization.
+* *ROI estimations can be done purely on a developer time base, costs can be a presented as a part of developer time and converted to money terms. Money and time are fungible concepts which a decision maker may understand compared to extremely technical topics that would be hard to explain.
