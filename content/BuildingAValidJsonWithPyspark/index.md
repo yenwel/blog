@@ -55,8 +55,8 @@ We see that in order to add our pets to the petstore we need to use the POST ver
 
 We can use the type system of pyspark to define a template expression to create the body for our request as follows:
 
-from pyspark.sql.functions import lit, col, to_json, struct, array
-from pyspark.sql.types import IntegerType
+    from pyspark.sql.functions import lit, col, to_json, struct, array
+    from pyspark.sql.types import IntegerType
 
     petbodycolexpr = to_json(
         struct(
