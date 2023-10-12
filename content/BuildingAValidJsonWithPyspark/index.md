@@ -1,7 +1,7 @@
 +++
 title = "Building a valid Json in a PySpark"
 description = "How to build a valid Json document based on PySpark schema syntax"
-date = 2023-01-08
+date = 2023-12-10
 draft = false
 slug = "valid-json-in-pyspark"
 
