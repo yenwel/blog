@@ -26,7 +26,7 @@ Let's start by defining our datalake of pets as follows:
 
     from PySpark.sql import Row
     rowspets =[
-        Row( petid = "1", petcategoryid = "1", petcategoryname = "Big", petname = "Byte", petphotourl = "https://en.wikipedia.org/wiki/Nile_crocodile#/media/File:NileCrocodile.jpg", pettagid = "1", pettagname = "green"),
+        Row( petid = "1", petcategoryid = "1", petcategoryname = "Big", petname = "Bite", petphotourl = "https://en.wikipedia.org/wiki/Nile_crocodile#/media/File:NileCrocodile.jpg", pettagid = "1", pettagname = "green"),
         Row( petid = "2", petcategoryid = "2", petcategoryname = "Medium", petname = "Jason", petphotourl = "https://en.wikipedia.org/wiki/Cat#/media/File:Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg", pettagid = "2", pettagname = "orange"),
         Row( petid = "3", petcategoryid = "3", petcategoryname = "Small", petname = "Sparky", petphotourl = "https://en.wikipedia.org/wiki/Rose-ringed_parakeet#/media/File:Rose-ringed_Parakeet_(Psittacula_krameri)-_Female_on_a_Neem_(Azadirachta_indica)_tree_at_Hodal_Iws_IMG_1279.jpg", pettagid = "1", pettagname = "green")
     ]
