@@ -181,6 +181,9 @@
         {% endif %}          
         {% if config.extra.mastodon_user %}
         <a href="https://{{ config.extra.mastodon_instance }}/@{{ config.extra.mastodon_user }}" target="_blank">Mastodon</a>
+        {% endif %}       
+        {% if config.extra.bluesky_user %}
+        <a href="https://bsky.app/profile/{{ config.extra.bluesky_user }}" target="_blank">Blue Sky</a>
         {% endif %}
         |
         Built on <a href="https://getzola.org" target="_blank">Zola</a>
