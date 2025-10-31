@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/Blog">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="stylesheet" href="https://yenwel.github.io/blog/site.css">
+  <style>    
+    img {
+      -webkit-filter: contrast(100%);
+          -moz-filter: contrast(100%);
+          -ms-filter: contrast(100%);
+            -o-filter: contrast(100%);
+              filter: contrast(100%);
+    }
+  </style>
+
+  <title>Déjà fu - Building a valid Json in a PySpark</title>
+  
+  
+
+  <meta name="description" itemprop="about" content="I’m teaching you things all the time. You might not be learning them, of course.">
+  <meta name="keywords" itemprop="keywords" content="data, iot, category theory, ai, rust, art, sculpture">
+  <meta name="author" itemprop="author" content="Jan Vandepitte">
+  <meta itemprop="headline" content="Déjà fu">
+  <meta itemprop="copyrightYear" content="2021">
+
+  <link rel="icon" href="https://yenwel.github.io/blog/images/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://yenwel.github.io/blog/images/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://yenwel.github.io/blog/images/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://yenwel.github.io/blog/images/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://yenwel.github.io/blog/images/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://yenwel.github.io/blog/images/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://yenwel.github.io/blog/images/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://yenwel.github.io/blog/images/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://yenwel.github.io/blog/images/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://yenwel.github.io/blog/images/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="https://yenwel.github.io/blog/images/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://yenwel.github.io/blog/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://yenwel.github.io/blog/images/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://yenwel.github.io/blog/images/favicon-16x16.png">
+  <link rel="manifest" href="https://yenwel.github.io/blog/images/manifest.json">
+  <meta name="msapplication-TileColor" content="#c98c08">
+  <meta name="msapplication-TileImage" content="https://yenwel.github.io/blog/images/ms-icon-144x144.png">
+  <meta name="theme-color" content="#c98c08">
+
+  <meta property="og:title" content="Déjà fu - Building a valid Json in a PySpark">
+  <meta property="og:description" content="How to build a valid Json document based on PySpark schema syntax">
+  <meta property="og:url" content="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/valid-json-in-pyspark">
+  <meta property="og:site_name" content="Déjà fu">
+  
+  <meta name="twitter:card" content="summary">
+  
+  <meta name="twitter:site" content="wel_yen">
+  <meta name="twitter:creator" content="wel_yen">
+  <meta name="twitter:image:alt" content="Déjà fu">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/mathtex-script-type.min.js" integrity="sha384-zWYbd0NBwgTsgIdFKVprSfTh1mbMPe5Hz1X3yY4Sd1h/K1cQoUe36OGwAGz/PcDy" crossorigin="anonymous"></script>
+      
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"
+          onload="renderMathInElement(document.body);"></script>
+      
+  
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"></button>
+            <a class="brand" href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog">Déjà fu</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                
+                
+                <li class="">
+                  <a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/"><span>Home</span></a>
+                </li>
+                
+                <li class="">
+                  <a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/categories"><span>Categories</span></a>
+                </li>
+                
+                <li class="">
+                  <a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags"><span>Tags</span></a>
+                </li>
+                
+                <li class="">
+                  <a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/about"><span>About</span></a>
+                </li>
+                
+                
+              </ul>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <div class="container navmargin">
+    <header class="jumbotron subhead" id="overview">
+      
+<p class="lead">
+  <span>&gt;&gt;</span>
+  <a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog">Home</a>
+  
+    <span class="divider">/</span>
+    <a class="category" href="https://yenwel.github.io/blog/categories/data-engineering/">data-engineering</a>
+    <span class="divider">/</span>
+      
+        <a href="https://yenwel.github.io/blog/tags/pyspark/">PySpark</a>,
+      
+        <a href="https://yenwel.github.io/blog/tags/json/">Json</a>,
+      
+        <a href="https://yenwel.github.io/blog/tags/tutorial/">tutorial</a>
+      
+  
+</p>
+
+      
+<div class="page-header">
+  <h1>Building a valid Json in a PySpark</h1>
+</div>
+
+      
+<p class="text-right">
+  <span class="label label-success">
+    &becaus;
+    
+      Jan Vandepitte
+    
+  </span>
+  <span class="label label-success">&there4; 2023-12-10</span>
+  <span class="label label-success">&infin; 5'</span>
+</p>
+
+    </header>
+    
+    <div class="row-fluid">
+
+      <div class="span9 bs-docs-sidebar">
+      
+<p>This article is meant for data engineers with some experience in Python and preferably also PySpark. It will demonstrate how to build a valid Json from the columns of a Spark dataframe.</p>
+<h2 id="why-build-a-valid-json-document-in-pyspark">Why build a valid Json document in PySpark</h2>
+<p>PySpark is a mature framework and API to do data engineering in a scalable way. Since it is based on the Python language it is possible to reuse a lot of that ecosystem also. One gap I encountered while doing data engineering with PySpark was when I used it to build dataframes on top of REST API calls. One important difference using the Python API and the PySpark API is that in order to be able to make use of the scale out architecture of a Spark cluster you need to implement some parts explicitly in the PySpark API. Otherwise your code will only run locally in Python in your notebook on the driver node in your Spark Cluster and that work will not be distributed to the Spark Cluster. Explicitly shipping Python code can be done aided by User Defined Functions (UDFs). Also for calling REST API in a scalable way can be done via an UDF as demonstrated <a href="https://github.com/jamesshocking/Spark-REST-API-UDF">here</a>. So that is a solved issue and this article does not go further into depth on that. It documents how to use the schema API of PySpark to explicitly define a schema for the output of a REST API call. However when it comes to the input of a REST API call a valid Json may be also sometimes be needed. This article provides this piece of that puzzle. When defining an UDF you may experience difficulties including serialization code. Moreover preparing valid Json strings in a dataframe before using it in a UDF may help debugging and understanding the inputs for your UDF since you can perform analysis on your input columns in the dataframe.</p>
+<h2 id="how-to-build-the-valid-json-document">How to build the valid Json document</h2>
+<p>Imagine that we want to use a <a href="https://petstore.swagger.io/#/">petstore api</a> to upload our pets from our datalake.</p>
+<p>Let's start by defining our datalake of pets as follows:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>from PySpark.sql import Row
+</span><span>rowspets =[
+</span><span>    Row( petid = &quot;1&quot;, petcategoryid = &quot;1&quot;, petcategoryname = &quot;Big&quot;, petname = &quot;Bite&quot;, petphotourl = &quot;https://en.wikipedia.org/wiki/Nile_crocodile#/media/File:NileCrocodile.jpg&quot;, pettagid = &quot;1&quot;, pettagname = &quot;green&quot;),
+</span><span>    Row( petid = &quot;2&quot;, petcategoryid = &quot;2&quot;, petcategoryname = &quot;Medium&quot;, petname = &quot;Jason&quot;, petphotourl = &quot;https://en.wikipedia.org/wiki/Cat#/media/File:Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg&quot;, pettagid = &quot;2&quot;, pettagname = &quot;orange&quot;),
+</span><span>    Row( petid = &quot;3&quot;, petcategoryid = &quot;3&quot;, petcategoryname = &quot;Small&quot;, petname = &quot;Sparky&quot;, petphotourl = &quot;https://en.wikipedia.org/wiki/Rose-ringed_parakeet#/media/File:Rose-ringed_Parakeet_(Psittacula_krameri)-_Female_on_a_Neem_(Azadirachta_indica)_tree_at_Hodal_Iws_IMG_1279.jpg&quot;, pettagid = &quot;1&quot;, pettagname = &quot;green&quot;)
+</span><span>]
+</span><span>
+</span><span>dfpets = spark.createDataFrame(rowspets)
+</span></code></pre>
+<p><img src="https://yenwel.github.io/blog/valid-json-in-pyspark/petstore.png" alt="live view of our petstore" /></p>
+<p>We see that in order to add our pets to the petstore we need to use the POST verb and use a specifically formatted Json for our pet</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>{
+</span><span>    &quot;id&quot;: 0,
+</span><span>    &quot;category&quot;: {
+</span><span>        &quot;id&quot;: 0,
+</span><span>        &quot;name&quot;: &quot;string&quot;
+</span><span>    },
+</span><span>    &quot;name&quot;: &quot;doggie&quot;,
+</span><span>    &quot;photoUrls&quot;: [
+</span><span>        &quot;string&quot;
+</span><span>    ],
+</span><span>    &quot;tags&quot;: [
+</span><span>        {
+</span><span>        &quot;id&quot;: 0,
+</span><span>        &quot;name&quot;: &quot;string&quot;
+</span><span>        }
+</span><span>    ],
+</span><span>    &quot;status&quot;: &quot;available&quot;
+</span><span>}
+</span></code></pre>
+<p>We can use the type system of PySpark to define a template expression to create the body for our request as follows:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>from pyspark.sql.functions import lit, col, to_json, struct, array
+</span><span>from pyspark.sql.types import IntegerType
+</span><span>
+</span><span>petbodycolexpr = to_json(
+</span><span>    struct(
+</span><span>        col(&quot;petid&quot;).cast(IntegerType()).alias(&quot;id&quot;),
+</span><span>        struct(
+</span><span>            col(&quot;petcategoryid&quot;).cast(IntegerType()).alias(&quot;id&quot;),
+</span><span>            col(&quot;petcategoryname&quot;).alias(&quot;name&quot;)
+</span><span>        ).alias(&quot;category&quot;),
+</span><span>        udf_encodejson(col(&quot;petname&quot;)).alias(&quot;name&quot;),
+</span><span>        array(
+</span><span>            udf_encodejson(col(&quot;petphotourl&quot;))
+</span><span>        ).alias(&quot;photoUrls&quot;),
+</span><span>        array(
+</span><span>            struct(
+</span><span>                col(&quot;pettagid&quot;).cast(IntegerType()).alias(&quot;id&quot;),
+</span><span>                col(&quot;pettagname&quot;).alias(&quot;name&quot;)
+</span><span>            )
+</span><span>        ).alias(&quot;tags&quot;),
+</span><span>        lit(&quot;available&quot;).alias(&quot;status&quot;)
+</span><span>    )
+</span><span>).alias(&quot;body&quot;)
+</span><span>
+</span><span>petbodycolexpr
+</span></code></pre>
+<p>Take notice how we can work with other PySpark functions (e.g. for casting an string to an int) and user defined functions to cleanup certain strings that may contain weird characters that are not allowed in a valid Json document. The to_Json function of the PySpark framework does not seem to handle this. We can then use the PySpark struct function to do object templating and the PySpark array function for list templating. As content we can use the columns in our dataframe or literals defined outside our dataframe with the lit or col PySpark functions. Finally we can give everything in our template a name using an alias.</p>
+<p>To summarize the equivalence between Json and our PySpark Object Notation:</p>
+<ul>
+<li>Json [] is PySpark array()</li>
+<li>Json {} is PySpark struct()</li>
+<li>Json key : val is PySpark col("val").alias("key") or lit("lit").alias("key")</li>
+</ul>
+<p>This results in the following column expression:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Column&lt;&#39;to_json(struct(CAST(petid AS INT) AS id, struct(CAST(petcategoryid AS INT) AS id, petcategoryname AS name) AS category, &lt;lambda&gt;(petname) AS name, array(&lt;lambda&gt;(petphotourl)) AS photoUrls, array(struct(CAST(pettagid AS INT) AS id, pettagname AS name)) AS tags, available AS status)) AS body&#39;&gt;
+</span></code></pre>
+<p>We can then use this Json template on our dataframe to see the input and the result of our API call side by side:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>dfexecute = dfpets \
+</span><span>    .withColumn(&quot;body&quot;,petbodycolexpr) \
+</span><span>    .select(&quot;*&quot;,
+</span><span>    udf_callAPI(
+</span><span>        lit(url),
+</span><span>        lit(verb),
+</span><span>        lit(username),
+</span><span>        lit(password),
+</span><span>        col(&quot;body&quot;)
+</span><span>        ).alias(&quot;statuscode&quot;)
+</span><span>)
+</span></code></pre>
+<h2 id="summary">Summary</h2>
+<p>As you can see the type system on a spark system is very expressive and parallels can be made to how a Json document is structured. This allows for templating dataframes as Jsondocuments in a very flexible manner.</p>
+
+
+<div id="disqus">
+  <div id="disqus_thread"></div>
+  <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://blog-qqjqpjlybg.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>                            
+</div>
+
+
+      </div> <!-- span9 -->
+
+      <div class="span3 bs-docs-sidebar">
+      
+        <h1>Search</h1>
+        <form class="form-search">
+          <input id="search" type="text" class="input-large search-query">
+        </form>
+        <div class="search-results">
+          <div class="search-results__items"></div>
+        </div>
+        <p></p>
+        <h1>Categories</h1>
+        <ul class="nav nav-list bs-docs-sidenav">
+          
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/categories/data-engineering">data-engineering</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/categories/lean">lean</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/categories/personal">personal</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/categories/project-management">project-management</a></li>
+          
+        </ul>
+        <p></p>
+        <h1>Tags</h1>
+        <ul class="nav nav-list bs-docs-sidenav">        
+          
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags/Json">Json</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags/managing-up">managing-up</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags/PySpark">PySpark</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags/time-management">time-management</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags/tutorial">tutorial</a></li>
+          
+            <li><a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog/tags/waste">waste</a></li>
+              
+        </ul>
+      
+      </div>
+
+    </div> <!-- row -->
+  </div> <!-- container navmargin -->
+
+  <footer class="container">
+    <hr class="soften">
+    <p>
+        2021 &copy;
+        <a href="https:&#x2F;&#x2F;yenwel.github.io&#x2F;blog">Jan Vandepitte</a>
+        |
+        
+        <a href="https://twitter.com/wel_yen" target="_blank">Twitter</a>
+        
+        
+        <a href="https://linkedin.com/in/jan-vandepitte" target="_blank">Linkedin</a>
+        
+        
+        <a href="https://github.com/yenwel" target="_blank">GitHub</a>
+        
+        
+        <a href="https://gitlab.com/yenwel1987" target="_blank">GitLab</a>
+                
+        
+        <a href="https://www.deviantart.com/yenwell" target="_blank">Deviant Art</a>
+                  
+        
+        <a href="https://mastodon-belgium.be/@lewney" target="_blank">Mastodon</a>
+               
+        
+        <a href="https://bsky.app/profile/yenwel.bsky.social" target="_blank">Blue Sky</a>
+        
+        |
+        Built on <a href="https://getzola.org" target="_blank">Zola</a>
+    </p>
+  </footer>
+
+  <script src="https://yenwel.github.io/blog/js/jquery.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-386.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-transition.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-alert.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-modal.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-dropdown.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-scrollspy.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-tab.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-tooltip.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-popover.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-button.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-collapse.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-carousel.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-typeahead.js"></script>
+  <script src="https://yenwel.github.io/blog/js/bootstrap-affix.js"></script>
+  <script src="https://yenwel.github.io/blog/js/zola.386.js"></script>
+  <script src="https://yenwel.github.io/blog/js/search.js"></script>
+  <script src="https://yenwel.github.io/blog/elasticlunr.min.js"></script>
+  <script src="https://yenwel.github.io/blog/search_index.en.js"></script>
+</body>
+</html>
