@@ -5,8 +5,6 @@ default_language = "en"
 title = "Déjà fu"
 description = "I’m teaching you things all the time. You might not be learning them, of course."
 
-generate_rss = true
-
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
