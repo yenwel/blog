@@ -1,8 +1,8 @@
 +++
 title = "Guesstimating Technical Debt"
 description = "How to quantify technical debt based on source code or ci/cd logs"
-date = 2023-01-08
-draft = true
+date = 2025-10-31
+draft = false
 slug = "there-is-no-time"
 
 [taxonomies]
